@@ -7,13 +7,15 @@ html {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
 :root {
     --black-bg: #0A0A0A;
     --dark-bg: #303841;
     --white-bg: #F3F3F3;
-    --kinda-orange: #2185D5;
+    --kinda-blue: #2185D5;
+    --header-height: 83px;
 }
 
 @font-face {
@@ -26,6 +28,11 @@ html {
     src: url('../assets/fonts/JetBrainsMono-Regular.ttf');
 }
 
+.landingPage {
+    min-height: 100vh;
+    /* border: 5px solid salmon; */
+}
+
 /* Header CSS */
 
 header {
@@ -36,20 +43,14 @@ header {
     background-color: var(--black-bg);
     color: var(--white-bg);
     height: max-content;
-    padding: 20px 0px;
     font-family: 'JetBrains Mono', sans-serif;
-
-}
-
-header h1 {
-    padding-left: 20px;
+    padding: 20px;
 }
 
 .hamborgerMenu {
     display: flex;
     flex-direction: column;
     align-items: end;
-    position: relative;
     padding-right: 10px;
 }
 
@@ -69,22 +70,32 @@ header h1 {
     height: 2px;
     background-color: var(--white-bg);
     transition: 0.6s;
+    overflow: hidden;
+}
+
+.bar2 {
+    text-align: center;
+}
+
+.bar2 i {
+    line-height: 30px;
+    transition: .8s;
+    font-size: .9rem;
 }
 
 .navLinks {
     width: 100vw;
     position: absolute;
-    top: 100%;
+    top: var(--header-height);
     right: 0;
-    z-index: -1;
-    transition: .6s ease-in;
-    transform: translateY(-100%);
-    background-color: var(--kinda-orange);
-    padding: 20px 15px 20px;
+    overflow: hidden;
 }
 
 .navLinks ul {
-    margin-top: 15px;
+    padding: 20px 15px 20px;
+    background-color: var(--kinda-blue);
+    transition: .6s ease-in;
+    transform: translateY(-100%);
     width: 100%;
     text-align: center;
     position: relative;
@@ -96,6 +107,7 @@ header h1 {
 
 .navLinks li {
     list-style-type: none;
+    position: relative;
 }
 
 .navLinks a {
@@ -106,19 +118,19 @@ header h1 {
 .navLinks a::after {
     content: '';
     width: 0%;
-    margin-top: 8px;
+    margin-top: 5px;
     height: 2px;
     display: block;
     position: absolute;
     background-color: var(--black-bg);
-    transition: .35s;
+    transition: .4s ease-in;
 }
 
 .navLinks a:hover::after {
     width: 100%;
 }
 
-.hamborgerFocus:focus~.navLinks {
+.hamborgerFocus:focus~.navLinks ul {
     transform: translate(0);
 }
 
@@ -131,10 +143,54 @@ header h1 {
 .hamborgerFocus:focus>.bar2 {
     transform: rotateZ(90deg);
     transform-origin: center;
-    height: 25px;
+    height: 30px;
+    width: 30px;
     border-radius: 50%;
-    background-color: var(--kinda-orange);
+    background-color: var(--kinda-blue);
+}
+
+.hamborgerFocus:focus>.bar2 i {
+    transform: rotateZ(-90deg);
 }
 
 
 /* Main page CSS */
+
+
+
+
+
+/* Media queries */
+@media screen and (min-width: 768px) {
+    .hamborgerFocus {
+        display: none;
+    }
+
+    .navLinks {
+        position: static;
+        width: fit-content;
+        overflow: visible;
+    }
+
+    .navLinks ul {
+        display: flex;
+        transform: translateY(0);
+        gap: 40px;
+        padding: 0;
+        background-color: transparent;
+        width: auto;
+    }
+
+    .navLinks li:not(:last-child) {
+        margin-bottom: 0;
+    }
+
+    .navLinks a {
+        color: var(--white-bg);
+    }
+
+    .navLinks a::after {
+        background-color: var(--white-bg);
+        transition: .2s;
+    }
+}
